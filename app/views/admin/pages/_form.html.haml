@@ -9,12 +9,12 @@
   = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title."
 
   - if EffectivePages.pages.length == 1
-    = f.input :template, :as => :hidden, :value => EffectivePages.pages.first
+    = hidden_field_tag :template, EffectivePages.pages.keys.first, name: 'effective_page[template]'
   - else
     = f.input :template, :as => :select, :collection => EffectivePages.pages, :include_blank => false
 
   - if EffectivePages.layouts.length == 1
-    = f.input :layout, :as => :hidden, :value => EffectivePages.layouts.first
+    = hidden_field_tag :layout, EffectivePages.layouts.keys.first, name: 'effective_page[layout]'
   - else
     = f.input :layout, :as => :select, :collection => EffectivePages.layouts, :include_blank => false
 
