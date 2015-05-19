@@ -1,5 +1,7 @@
 module Effective
   class Page < ActiveRecord::Base
+    belongs_to :parent, class_name: 'Effective::Page'
+    has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
     acts_as_sluggable
     acts_as_role_restricted
     acts_as_regionable
