@@ -7,6 +7,8 @@
     = f.input :slug, :hint => "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br>#{('This page is currently reachable via ' + link_to(current_url.gsub(f.object.slug, '<strong>' + f.object.slug + '</strong>').html_safe, current_url)) if current_url }".html_safe
 
   = f.input :meta_description, :hint => "A one or two sentence summary of this page. Appears on Google search results underneath the page title."
+  = f.input :show_children, :hint => "Render the child link menu."
+  = f.input :parent_id, collection: Effective::Page.order(:title), label_method: :title, value_method: :id
 
   - if EffectivePages.pages.length == 1
     = hidden_field_tag :template, EffectivePages.pages.keys.first, name: 'effective_page[template]'
