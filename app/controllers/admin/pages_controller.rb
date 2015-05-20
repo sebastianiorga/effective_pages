@@ -46,14 +46,14 @@ module Admin
     end
 
     def edit
-      @page = Effective::Page.find(params[:id])
+      @page = Effective::Page.customized_find(params[:id])
       @page_title = 'Edit Page'
 
       EffectivePages.authorized?(self, :edit, @page)
     end
 
     def update
-      @page = Effective::Page.find(params[:id])
+      @page = Effective::Page.customized_find(params[:id])
       @page_title = 'Edit Page'
 
       EffectivePages.authorized?(self, :update, @page)
@@ -74,7 +74,7 @@ module Admin
     end
 
     def destroy
-      @page = Effective::Page.find(params[:id])
+      @page = Effective::Page.customized_find(params[:id])
 
       EffectivePages.authorized?(self, :destroy, @page)
 

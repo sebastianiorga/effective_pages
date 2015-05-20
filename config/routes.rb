@@ -1,7 +1,8 @@
 class EffectivePagesRoutingConstraint
   def self.matches?(request)
     id = request.path_parameters[:id] || '/'
-    Effective::Page.find(id).present? rescue false
+
+    Effective::Page.customized_find(id).present? rescue false
   end
 end
 

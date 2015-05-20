@@ -4,8 +4,8 @@ module Effective
       @pages = (Rails::VERSION::MAJOR > 3 ? Effective::Page.all : Effective::Page.scoped)
       @pages = @pages.published if params[:edit].to_s != 'true'
 
-      @page = @pages.find(params[:id])
-      raise Effective::AccessDenied unless @page.roles_permit?(current_user)
+      @page = @pages.customized_find(params[:id])
+      # raise Effective::AccessDenied unless @page.roles_permit?(current_user)
 
       EffectivePages.authorized?(self, :show, @page)
 

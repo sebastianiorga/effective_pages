@@ -27,10 +27,41 @@ module Effective
 
     scope :drafts, -> { where(:draft => true) }
     scope :published, -> { where(:draft => false) }
+
+    def contextualized_slug
+      return override_url if override_url.present?
+
+      return "/#{slug}" if parent.blank? || parent == self
+
+      "#{parent.contextualized_slug}/#{slug}"
+    end
+
+    def self.customized_find(arg)
+      return find(arg) if regular_find?(arg)
+
+      clean_arg = arg.to_s.gsub(/^\/*/, '').gsub(/\/*$/, '')
+
+      overriden = find_by override_url: clean_arg
+
+      return overriden if overriden.present?
+
+      find_by_contextualized_slug(clean_arg)
+    end
+
+    def self.find_by_contextualized_slug(arg)
+      splits = arg.split('/').select(&:present?)
+      root = find_by! slug: splits[0]
+      rest = splits[1..-1]
+
+      return root if rest.empty?
+
+      rest.reduce(root) do |a, e|
+        a.children.find_by! slug: e
+      end
+    end
+
+    def self.regular_find?(args)
+      args.is_a?(Array) || args.to_i > 0
+    end
   end
-
 end
-
-
-
-
