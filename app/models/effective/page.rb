@@ -31,15 +31,21 @@ module Effective
     def contextualized_slug
       return override_url if override_url.present?
 
-      return "/#{slug}" if parent.blank? || parent == self
+      return "#{url_delimiter}#{slug}" if parent.blank? || parent == self
 
-      "#{parent.contextualized_slug}/#{slug}"
+      "#{parent.contextualized_slug}#{url_delimiter}#{slug}"
+    end
+
+    def url_delimiter
+      return '#' if just_a_chunk_was
+
+      '/'
     end
 
     def self.customized_find(arg)
       return find(arg) if regular_find?(arg)
 
-      clean_arg = arg.to_s.gsub(/^\/*/, '').gsub(/\/*$/, '')
+      clean_arg = arg.split('#')[0].to_s.gsub(/^\/*/, '').gsub(/\/*$/, '')
 
       overriden = find_by override_url: clean_arg
 
@@ -67,9 +73,9 @@ module Effective
     def contextualized_slug_was
       return override_url_was if override_url_was.present?
 
-      return "/#{slug_was}" if parent.blank? || parent == self
+      return "#{url_delimiter}#{slug_was}" if parent.blank? || parent == self
 
-      "#{parent.contextualized_slug}/#{slug_was}"
+      "#{parent.contextualized_slug}#{url_delimiter}#{slug_was}"
     end
 
     def self.regular_find?(args)
