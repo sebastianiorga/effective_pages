@@ -60,8 +60,24 @@ module Effective
       end
     end
 
+    def to_param
+      slug.present? ? contextualized_slug_was : super
+    end
+
+    def contextualized_slug_was
+      return override_url_was if override_url_was.present?
+
+      return "/#{slug_was}" if parent.blank? || parent == self
+
+      "#{parent.contextualized_slug}/#{slug_was}"
+    end
+
     def self.regular_find?(args)
       args.is_a?(Array) || args.to_i > 0
+    end
+
+    def to_s
+      title
     end
   end
 end
