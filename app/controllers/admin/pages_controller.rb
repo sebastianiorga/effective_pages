@@ -32,12 +32,12 @@ module Admin
 
       if @page.save
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
-          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page))
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page.id))
         elsif params[:commit] == 'Save and Add New'
           redirect_to effective_pages.new_admin_page_path
         else
           flash[:success] = 'Successfully created page'
-          redirect_to effective_pages.edit_admin_page_path(@page)
+          redirect_to effective_pages.edit_admin_page_path(@page.id)
         end
       else
         flash.now[:danger] = 'Unable to create page'
@@ -60,12 +60,12 @@ module Admin
 
       if @page.update_attributes(page_params)
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
-          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page))
+          redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page.id))
         elsif params[:commit] == 'Save and Add New'
           redirect_to effective_pages.new_admin_page_path
         else
           flash[:success] = 'Successfully updated page'
-          redirect_to effective_pages.edit_admin_page_path(@page)
+          redirect_to effective_pages.edit_admin_page_path(@page.id)
         end
       else
         flash.now[:danger] = 'Unable to update page'

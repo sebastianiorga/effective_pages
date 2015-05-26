@@ -1,6 +1,8 @@
 = simple_form_for(page, (EffectivePages.simple_form_options || {}).merge(:url => (page.persisted? ? effective_pages.admin_page_path(page.id) : effective_pages.admin_pages_path))) do |f|
   = f.input :title, :hint => "Give this page a title"
   = f.input :draft, :hint => "Save this page as a draft.  It will not be accessible on the website."
+  = f.input :just_a_chunk, :hint => "Save this page as a chunk.  It will only appear as a section inside its parent page. Cannot navigate directly to the slug."
+  = f.input :sort_order, hint: 'Used to sort child pages when being rendered by a parent.'
 
   - if !f.object.new_record? || f.object.errors.include?(:slug)
     - current_url = (effective_pages.page_url(f.object) rescue nil)
