@@ -4,7 +4,10 @@ module Effective
     has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
     has_attached_file :thumbnail,
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
-                    url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension'
+                    url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
+                    styles: {
+                      small: '176x86!'
+                    }
     validates_attachment_content_type :thumbnail,
                                     content_type: /\A(image\/.*)\Z/
     attr_accessor :delete_thumbnail
