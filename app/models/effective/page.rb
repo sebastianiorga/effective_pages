@@ -6,7 +6,7 @@ module Effective
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     styles: {
-                      small: '176x86!'
+                      small: '176x86#'
                     }
     validates_attachment_content_type :thumbnail,
                                     content_type: /\A(image\/.*)\Z/
