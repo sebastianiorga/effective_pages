@@ -110,7 +110,7 @@ module Effective
     def self_or_parent_with_css
       return self if css.present?
 
-      return '' if parent.blank? || parent == self
+      return if parent.blank? || parent == self
 
       parent.self_or_parent_with_css
     end
