@@ -91,7 +91,7 @@ module Admin
 
     def page_params
       params.require(:effective_page).permit(
-        :title, :meta_description, :draft, :layout, :template, :slug, :show_children, :just_a_chunk, :sort_order, :parent_id, :roles => []
+        :title, :meta_description, :draft, :layout, :template, :slug, :show_children, :just_a_chunk, :sort_order, :parent_id, :thumbnail, :delete_thumbnail, :roles => []
       )
     end
 

@@ -6,7 +6,9 @@
 
   = f.input :thumbnail, hint: 'Upload image.'
   - if f.object.thumbnail.exists?
-    %p = image_tag f.object.thumbnail.url
+    %p
+      = image_tag f.object.thumbnail.url
+      = f.input :delete_thumbnail, as: :boolean
   - else
     %p No image uploaded.
 

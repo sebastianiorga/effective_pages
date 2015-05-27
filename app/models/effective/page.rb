@@ -5,6 +5,11 @@ module Effective
     has_attached_file :thumbnail,
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension'
+    validates_attachment_content_type :thumbnail,
+                                    content_type: /\A(image\/.*)\Z/
+    attr_accessor :delete_thumbnail
+    before_validation { thumbnail.clear if delete_thumbnail == '1' }
+
     acts_as_sluggable
     acts_as_role_restricted
     acts_as_regionable
