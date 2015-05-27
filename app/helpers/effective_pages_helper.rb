@@ -1,5 +1,13 @@
 module EffectivePagesHelper
 
+  def slug_hint(page)
+    url = link_to effective_pages.page_url(@page) do
+      effective_pages.page_url(@page).gsub(effective_pages.page_path(@page), "<strong>#{effective_pages.page_path(@page)}</strong>").html_safe
+    end
+
+    "The slug controls this page's internet address. Be careful, changing the slug will break links that other websites may have to the old address.<br> This page is currently reachable via #{url}."
+  end
+
   def effective_pages_body_classes
     [
       params[:controller].parameterize,

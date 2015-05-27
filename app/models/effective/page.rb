@@ -2,6 +2,9 @@ module Effective
   class Page < ActiveRecord::Base
     belongs_to :parent, class_name: 'Effective::Page'
     has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
+    has_attached_file :thumbnail,
+                    path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
+                    url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension'
     acts_as_sluggable
     acts_as_role_restricted
     acts_as_regionable
@@ -31,7 +34,7 @@ module Effective
     def contextualized_slug
       return override_url if override_url.present?
 
-      return "#{url_delimiter}#{slug}" if parent.blank? || parent == self
+      return "#{slug}" if parent.blank? || parent == self
 
       "#{parent.contextualized_slug}#{url_delimiter}#{slug}"
     end
@@ -73,7 +76,7 @@ module Effective
     def contextualized_slug_was
       return override_url_was if override_url_was.present?
 
-      return "#{url_delimiter}#{slug_was}" if parent.blank? || parent == self
+      return "#{slug_was}" if parent.blank? || parent == self
 
       "#{parent.contextualized_slug}#{url_delimiter}#{slug_was}"
     end
