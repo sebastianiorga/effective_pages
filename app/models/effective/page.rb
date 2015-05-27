@@ -35,6 +35,11 @@ module Effective
 
     scope :drafts, -> { where(:draft => true) }
     scope :published, -> { where(:draft => false) }
+    scope :sort_ordered, -> { order :sort_order }
+
+    def sort_ordered_children
+      children.sort_ordered
+    end
 
     def contextualized_slug
       return override_url if override_url.present?

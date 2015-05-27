@@ -14,7 +14,7 @@ if defined?(EffectiveDatatables)
         table_column :parent do |page|
           next if page.parent.blank?
 
-          link_to page.parent, "/admin/pages#{page.parent.contextualized_slug}"
+          link_to page.parent, "/admin/pages/#{page.parent.id}/edit"
         end
 
         table_column :actions, :sortable => false, :filter => false, :partial => '/admin/pages/actions'
