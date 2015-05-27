@@ -102,5 +102,17 @@ module Effective
     def to_s
       title
     end
+
+    def css
+      regions.find_by(title: :css).try :content
+    end
+
+    def self_or_parent_with_css
+      return self if css.present?
+
+      return '' if parent.blank? || parent == self
+
+      parent.self_or_parent_with_css
+    end
   end
 end
