@@ -41,7 +41,7 @@ module Effective
     scope :drafts, -> { where(:draft => true) }
     scope :published, -> { where(:draft => false) }
     scope :sort_ordered, -> { order :sort_order }
-    scope :exclude_chunks, -> { where('just_a_chunk = false OR just_a_chunk IS NULL') }
+    scope :exclude_chunks, -> { where('pages.just_a_chunk = false OR pages.just_a_chunk IS NULL') }
 
     def sort_ordered_children
       children.sort_ordered
