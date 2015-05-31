@@ -10,7 +10,8 @@ if defined?(EffectiveDatatables)
         table_column :slug
         table_column :draft
         table_column :override_url
-        array_column :parent, filter: { type: :text } do |page|
+        table_column :just_a_chunk
+        table_column :parent, filter: { type: :text } do |page|
           next if page.parent.blank?
 
           link_to page.parent, "/admin/pages/#{page.parent.id}/edit"
