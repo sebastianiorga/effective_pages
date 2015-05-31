@@ -3,7 +3,6 @@ if defined?(EffectiveDatatables)
     module Datatables
       class Pages < Effective::Datatable
         default_order :title, :asc
-        default_entries :all
 
         table_column :id, :visible => false
 
@@ -11,7 +10,7 @@ if defined?(EffectiveDatatables)
         table_column :slug
         table_column :draft
         table_column :override_url
-        table_column :parent do |page|
+        array_column :parent, filter: { type: :text } do |page|
           next if page.parent.blank?
 
           link_to page.parent, "/admin/pages/#{page.parent.id}/edit"
@@ -21,6 +20,14 @@ if defined?(EffectiveDatatables)
 
         def collection
           Effective::Page.all
+        end
+
+        def search_column(collection, table_column, search_term)
+          if table_column[:name] == 'parent'
+            collection.where 'LOWER(parents_pages.title) LIKE LOWER(?)', "%#{search_term}%"
+          else
+            super
+          end
         end
       end
     end
