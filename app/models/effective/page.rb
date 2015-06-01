@@ -3,7 +3,6 @@ module Effective
     belongs_to :parent, class_name: 'Effective::Page'
     has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
 
-    default_scope -> { eager_load :parent }
     has_attached_file :thumbnail,
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
@@ -18,6 +17,8 @@ module Effective
     acts_as_sluggable
     acts_as_role_restricted
     acts_as_regionable
+
+    default_scope -> { eager_load :parent, :regions, :children }
 
     has_many :menu_items, :as => :menuable, :dependent => :destroy
 
