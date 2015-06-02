@@ -8,7 +8,8 @@ module Effective
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     url: '/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
                     styles: {
-                      small: '176x86#'
+                      small: '176x86#',
+                      list_thumb: '150x150!'
                     }
     validates_attachment_content_type :thumbnail,
                                     content_type: /\A(image\/.*)\Z/
@@ -117,6 +118,12 @@ module Effective
       return if parent.blank? || parent == self
 
       parent.self_or_parent_with_css
+    end
+
+    def full_tree
+      return [self] if parent.blank? || parent == self
+
+      parent.full_tree << self
     end
   end
 end
