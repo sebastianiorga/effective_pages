@@ -2,6 +2,7 @@ module Effective
   class Page < ActiveRecord::Base
     belongs_to :parent, class_name: 'Effective::Page'
     has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
+    has_many :premium_downloads
 
     has_attached_file :thumbnail,
                     path: ':rails_root/public/public_storage/:rails_env/pages/:id/:style/:basename.:extension',
