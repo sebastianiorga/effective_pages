@@ -53,7 +53,7 @@ module Effective
     def contextualized_slug
       return override_url if override_url.present?
 
-      return "#{slug}" if parent.blank? || parent == self
+      return "#{slug}" if root?
 
       "#{parent.contextualized_slug}#{url_delimiter}#{slug}"
     end
@@ -95,7 +95,7 @@ module Effective
     def contextualized_slug_was
       return override_url_was if override_url_was.present?
 
-      return "#{slug_was}" if parent.blank? || parent == self
+      return "#{slug_was}" if root?
 
       "#{parent.contextualized_slug}#{url_delimiter}#{slug_was}"
     end
@@ -115,15 +115,37 @@ module Effective
     def self_or_parent_with_css
       return self if css.present?
 
-      return if parent.blank? || parent == self
+      return if root?
 
       parent.self_or_parent_with_css
     end
 
     def full_tree
-      return [self] if parent.blank? || parent == self
+      return [self] if root?
 
       parent.full_tree << self
+    end
+
+    def root?
+      parent.blank? || parent == self
+    end
+
+    def prior_sibling
+      return if root?
+
+      parent.children.sort_ordered.where('pages.sort_order < ?', sort_order).last
+    end
+
+    def next_sibling
+      parent.children.sort_ordered.where('pages.sort_order > ?', sort_order).first
+    end
+
+    def prior_sibling?
+      prior_sibling.present?
+    end
+
+    def next_sibling?
+      next_sibling.present?
     end
   end
 end

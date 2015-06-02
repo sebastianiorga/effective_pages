@@ -8,7 +8,7 @@ module Effective
       @page = @pages.customized_find(params[:id])
       # raise Effective::AccessDenied unless @page.roles_permit?(current_user)
 
-      EffectivePages.authorized?(self, :show, @page)
+      EffectivePages.authorized?(self, :show, @page) || return
 
       @page_title = @page.title
 
