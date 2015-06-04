@@ -22,6 +22,7 @@ module Effective
 
     default_scope -> { eager_load :parent, :regions, :children }
 
+    scope :premium_roots, -> { where(layout: 'premium').where('parents_pages.layout != "premium"') }
     has_many :menu_items, :as => :menuable, :dependent => :destroy
 
     self.table_name = EffectivePages.pages_table_name.to_s
