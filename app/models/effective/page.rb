@@ -1,5 +1,6 @@
 module Effective
   class Page < ActiveRecord::Base
+    include PageOverride
     belongs_to :parent, class_name: 'Effective::Page'
     has_many :children, class_name: 'Effective::Page', foreign_key: :parent_id
     has_many :premium_downloads
