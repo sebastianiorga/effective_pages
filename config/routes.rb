@@ -16,6 +16,7 @@ EffectivePages::Engine.routes.draw do
 
   scope :module => 'effective' do
     get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :page
+    get '*id' => "pages#show", :constraints => EffectivePagesRoutingConstraint, :as => :effective_page
   end
 end
 
