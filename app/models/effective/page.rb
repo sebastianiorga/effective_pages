@@ -21,8 +21,6 @@ module Effective
     acts_as_role_restricted
     acts_as_regionable
 
-    default_scope -> { eager_load :parent, :regions, :children }
-
     scope :premium_roots, -> { where(layout: 'premium').where('parents_pages.layout != "premium"') }
     has_many :menu_items, :as => :menuable, :dependent => :destroy
 
