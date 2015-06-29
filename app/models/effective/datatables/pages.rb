@@ -20,7 +20,7 @@ if defined?(EffectiveDatatables)
         table_column :actions, :sortable => false, :filter => false, :partial => '/admin/pages/actions'
 
         def collection
-          Effective::Page.all
+          Effective::Page.eager_load :parent
         end
 
         def search_column(collection, table_column, search_term)
