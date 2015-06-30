@@ -47,7 +47,7 @@ module Effective
     scope :exclude_chunks, -> { where('pages.just_a_chunk = false OR pages.just_a_chunk IS NULL') }
 
     def sort_ordered_children
-      children.sort_ordered
+      children.eager_load(:parent, :regions, :children).sort_ordered
     end
 
     def contextualized_slug
