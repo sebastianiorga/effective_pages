@@ -57,7 +57,7 @@ module Admin
       @page_title = 'Edit Page'
 
       EffectivePages.authorized?(self, :update, @page)
-
+      binding.pry
       if @page.update_attributes(page_params)
         if params[:commit] == 'Save and Edit Content' && defined?(EffectiveRegions)
           redirect_to effective_regions.edit_path(effective_pages.page_path(@page), :exit => effective_pages.edit_admin_page_path(@page.id))
